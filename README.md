@@ -46,3 +46,20 @@ declare module 'styled-components' {
 ```
 
 # Criar estilos globais com styled-components
+- Criar um arquivo global e colocar
+```tsx
+import { createGlobalStyle } from "styled-components";
+
+export const GlobalStyle = createGlobalStyle``
+
+```
+- importar no app
+```tsx
+export function App() {
+  return (
+    <ThemeProvider theme={defaultTheme}>
+       <GlobalStyle />
+    </ThemeProvider>
+  )
+}
+```
