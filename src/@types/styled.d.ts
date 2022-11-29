@@ -5,5 +5,5 @@ type ThemeType = typeof defaultTheme
 
 // sobrescrever algo no styled-components
 declare module 'styled-components' {
-    export interface DefaultTheme extends ThemeType {}
+  export interface DefaultTheme extends ThemeType {}
 }

@@ -63,3 +63,24 @@ export function App() {
   )
 }
 ```
+
+# ESLint
+```sh
+npm i eslint -D
+npm i @rocketseat/eslint-config -D
+npx eslint --init
+```
+- Criar arquivo .eslintrc.json
+```json
+{
+    "extends": "@rocketseat/eslint-config/react"
+}
+```
+
+```sh
+# Mostrar erros eslint
+npx eslint src --ext .ts,.tsx
+
+# Corrigir erros eslint de form automatica
+npx eslint src --ext .ts,.tsx
+```
