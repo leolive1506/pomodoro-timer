@@ -154,3 +154,12 @@ input::-webkit-calendar-picker-indicator {
   display: none !important;
 }
 ```
+
+## Tipar valores constantes
+```tsx
+const STATUS_COLORS = {
+  yellow: 'yellow-500',
+  green: 'green-500',
+  red: 'red-500',
+} as const
+```
