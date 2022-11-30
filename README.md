@@ -132,3 +132,25 @@ export function App() {
   )
 }
 ```
+
+# Dicas gerais
+## Criar Sugestões de inputs
+```html
+<input
+  id="task"
+  placeholder="Dê um nome para seu projeto"
+  list="task-suggestions"
+/>
+
+<datalist id="task-suggestions">
+  <option value="Projeto 1" />
+  <option value="Projeto 2" />
+  <option value="Projeto 3" />
+</datalist>
+```
+- Remover setinha em cima input
+```css
+input::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+```
