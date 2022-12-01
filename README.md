@@ -263,3 +263,42 @@ const STATUS_COLORS = {
   red: 'red-500',
 } as const
 ```
+
+## useEffect
+- Evitar uso de maneira errada
+  - Dificilmente utiliza useEffect para atualizar um estado, ex:
+    - ao filtrar um item do array como no exemplo abaixo
+      - Muda estado filter (1 renderização)
+      - useEffect monitora filter que após alguma mudança em filter, muda o filteredList (+1 renderização)
+```tsx
+const [list, setList] = useState()
+const [filter, setFilter] = useState()
+const [filteredList, setFilteredList] = useState()
+
+useEffect(() => {
+  setFilteredList(list.filter(item => item.includes(filter)))
+}, [filter])
+
+<input onChange={e => setFilter(e.target.value)} />
+<ul>
+  {filteredList.map(list => <li>{list}</list>)}
+</ul>
+```
+- Corrigir renderização desnecessária acima
+```tsx
+const [list, setList] = useState()
+const [filter, setFilter] = useState()
+const [filteredList, setFilteredList] = usState()
+
+const filteredList = list.filter(item => item.includes(filter))
+
+<input onChange={e => setFilter(e.target.value)} />
+<ul>
+  {filteredList.map(list => <li>{list}</list>)}
+</ul>
+```
+- retorno de um useEffect
+  - É uma função
+    - Ao executar useEffect novamente, faz algo pra resetar o useEffect anterior
+### SetInterval && SetTimeout
+- O um segundo deles não é preciso, é uma estimativa
