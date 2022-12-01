@@ -195,6 +195,44 @@ function handleCreateNewCycle(data) {
 </form>
 ```
 
+### Validação com react hook form
+- não tem por padrão a própria validação
+  - Tem integração com libs de validação como 
+    - [yup](https://github.com/jquense/yup)
+    - [joi](https://github.com/hapijs/joi) 
+    - [zod](https://github.com/colinhacks/zod)
+
+### Usando zod
+```sh
+npm i zod
+npm i @hookform/resolvers
+```
+
+```tsx
+const newCycleFormValidationSchema = zod.object({
+  task: zod.string().min(1, 'Informe a tarefa'),
+  minutesAmount: zod
+    .string()
+    .min(5, 'O ciclo precisa ser de no mínimo 5 minutos')
+    .max(60, 'O ciclo precisa ser de no máximo 60 minutos'),
+})
+
+const { register, handleSubmit, watch, formState } = useForm({
+  resolver: zodResolver(newCycleFormValidationSchema),
+})
+
+// pegar os erros
+console.log(formState.errors)
+```
+
+### Pegar tipagem do shema
+```tsx
+// infer -> automatizar processo de tipagem
+
+type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
+const { register, handleSubmit, watch } = useForm<NewCycleFormData>()
+```
+
 # Dicas gerais
 ## Criar Sugestões de inputs
 ```html
