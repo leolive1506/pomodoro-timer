@@ -133,6 +133,68 @@ export function App() {
 }
 ```
 
+# Formulários
+## Controlled vs Uncontrolled
+### Controlled
+- Manter em tempo real o estado (informação)
+  - Ao mudar, atualiza o estado
+  - Lado positivo
+    - Como tem valor em tempo real, pode facilmente reflitir alterações baseada no valor dos inputs
+  - Lado negativo
+    - Toda vez atualiza estado, faz uma nova renderização
+    - Calcula todo componente do estado que mudou
+```tsx
+const [task, setTask] = useState('')
+<input onChange={e => setTask(e.target.value)} value={task}>
+```
+
+### Uncontrolled
+- Busca a informação somente quando precisar dela
+  - Maior performace
+  - Menos fluidez em reflitir alterações baseada no valor dos inputs
+```tsx
+const [task, setTask] = useState('')
+function handleSubmit(event) {
+  event.target.task.value
+}
+
+<form onSubmit={handleSubmit}>
+  <input name="task" />
+</form>
+```
+
+## [React hook form](https://react-hook-form.com/get-started)
+- Consegue trabalhar com formulários tanto de maneira **CONTROLLED** quanto **UNCONTROLLED**
+  - Ou seja, consegue atingir **PERFORMACE** e **FLUIDEZ**
+```sh
+npm install react-hook-form
+```
+
+- Register
+  - Adicionar um input ao form
+  - Defini os campos que ira ter no form
+  - Retorno da função retorna metodos utilizados para trabalhar com inputs no js
+    - onChange, onBlur, etc
+  - Ao utilizar spread operator deixa esses atributos no próprio input
+
+- watch
+  - Utilizado para pegar valores em tempo real de um input
+
+```tsx
+const { register, handleSubmit, watch } = useForm()
+const task = watch('task')
+
+function handleCreateNewCycle(data) {
+  // data retorna os dados do input
+  // { input_name: 'Projeto 01' }
+  console.log(data)
+}
+
+<form onSubmit={handleSubmit(handleCreateNewCycle)}>
+  <input {...register('input_name')} />
+</form>
+```
+
 # Dicas gerais
 ## Criar Sugestões de inputs
 ```html
