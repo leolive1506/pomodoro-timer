@@ -202,6 +202,25 @@ function handleCreateNewCycle(data) {
     - [joi](https://github.com/hapijs/joi) 
     - [zod](https://github.com/colinhacks/zod)
 
+### Provider no react hook form
+```tsx
+const newCycleForm = useForm<NewCycleFormData>({})
+
+<FormProvider {...newCycleForm}>
+  <NewCycleForm />
+</FormProvider>
+
+// dentro new cycle Form
+const { register } = useFormContext()
+<TaskInput
+  id="task"
+  placeholder="Dê um nome para seu projeto"
+  list="task-suggestions"
+  disabled={!!activeCycle}
+  {...register('task')}
+/>
+```
+
 ### Usando zod
 ```sh
 npm i zod
@@ -231,6 +250,52 @@ console.log(formState.errors)
 
 type NewCycleFormData = zod.infer<typeof newCycleFormValidationSchema>
 const { register, handleSubmit, watch } = useForm<NewCycleFormData>()
+```
+
+# Prop drilling
+- Tem-se MUITAS propriedades APENAS para comunicação entre componentes
+- Forma de resolver:
+  - Context API 
+    - Permite compartilhar informações entre vários componentes ao mesmo tempo
+      - Componentes que tem acesso
+        - Podem modificar
+        - Quando modificado
+          - Todos componentes que dependem dessa informação são atualizados
+
+# Context API
+- Permite compartilhar informações entre vários componentes ao mesmo tempo, evitanto problema de prop drilling
+- Ao criar um context (compartilhar uma informação)
+  - Não pode modificar essas informações
+  - Resolver:
+    - Para qeu as informações esteja acessiveis para o contexto
+      - Essa informação precisa estar mais acima possível dos subcomponentes que precisam dessa informação
+```tsx
+import { createContext, useContext } from 'react'
+
+// createContext(valorInicial)
+const CycleContext = createContext({})
+
+// use context
+function NewCycleForm() {
+  const { activeCycle, setActiveCycle } = useContext(CycleContext)
+
+  return (
+    <div>
+      <span>{activeCycle}</span>
+      <button type="button" onClick={() => setActiveCycle(state => state + 1)}>Alterar</button>
+    </div>
+  )
+}
+
+function Home() {
+  const [activeCycle, setActiveCycle] = useState(0)
+  // compartilhar informações
+  return (
+    <CycleContext.Provider value={{ activeCycle, setActiveCycle }}>
+      <NewCycleForm />
+    </CycleContext.Provider>
+  )
+}
 ```
 
 # Dicas gerais
