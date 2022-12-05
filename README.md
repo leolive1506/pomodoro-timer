@@ -298,6 +298,39 @@ function Home() {
 }
 ```
 
+# Reducer
+- Armazenar informação e alterar no futuro
+  - Utilizado para armazenar informações complexas, principalmente na hora de alterar essas inforamções
+  - Ex:
+    - Um estado depende da versão anterior, novos valores dependem calculos etc
+    - Ao criar reduce
+      - Abtrai o codigo e desacopla um pouco da lógica
+## Sintexe
+```tsx
+// state valor atual
+// action -> qual quer realizar na variavel
+// dispatch -> não altera diretamente, dispara qual ação
+// segundo argumento é o estado inicial
+const [cycles, dispatch] = useReducer((state, action) => {}, [])
+
+// usar (passa oq quer dentro função mas tem que conseguir distinguir qual action usar)
+dispatch({
+  type: 'ADD_NEW_CYCLE',
+  payload: {
+    data: newCycle
+  }
+})
+```
+- Ao usar um reducer, não precisar salvar somente uma informação 
+- Ex:
+```tsx
+interface CycleState {
+  cycles: Cycle[],
+  activeCycleId: string | null
+}
+const [cycles, dispatch] = useReducer((state: CycleState, action) => {}, [])
+```
+
 # Dicas gerais
 ## Criar Sugestões de inputs
 ```html
