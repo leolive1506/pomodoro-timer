@@ -37,12 +37,14 @@ interface CyclesContextProviderProps {
 export function CyclesContextProvider({
   children,
 }: CyclesContextProviderProps) {
+  const emptyCylesStates = {
+    cycles: [],
+    activeCycleId: null,
+  }
+
   const [cyclesState, dispatch] = useReducer(
     cyclesReducers,
-    {
-      cycles: [],
-      activeCycleId: null,
-    },
+    emptyCylesStates,
     () => {
       // assim qeu criar reducer, recupera os dados de algum lugar
       const storagedStateAsJSON = localStorage.getItem(
@@ -52,6 +54,8 @@ export function CyclesContextProvider({
       if (storagedStateAsJSON) {
         return JSON.parse(storagedStateAsJSON)
       }
+
+      return emptyCylesStates
     },
   )
 
