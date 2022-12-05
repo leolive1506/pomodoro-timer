@@ -331,6 +331,28 @@ interface CycleState {
 const [cycles, dispatch] = useReducer((state: CycleState, action) => {}, [])
 ```
 
+# [Immer](https://github.com/immerjs/immer)
+- Biblioteca para trabalhar com dados imutaveis (imutabilidade)
+- Trabalhar com estrutura de dados imutaveis como se não fosse imutaveis
+
+- Ex
+```tsx
+import { produce } from 'immer'
+
+// com imutabilidade
+return {
+  cycles: [...state.cycles, action.payload.newCycle],
+  activeCycleId: action.payload.newCycle.id,
+}
+
+// com lib
+// return produce(oQueVaiModificar, rascunho => { trabalhar como se fosse dados mutaveis })
+return produce(state, (draft) => {
+  draft.cycles.push(action.payload.newCycle)
+  draft.activeCycleId = action.payload.newCycle.id
+})
+```
+
 # Dicas gerais
 ## Criar Sugestões de inputs
 ```html
