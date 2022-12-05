@@ -311,7 +311,8 @@ function Home() {
 // action -> qual quer realizar na variavel
 // dispatch -> não altera diretamente, dispara qual ação
 // segundo argumento é o estado inicial
-const [cycles, dispatch] = useReducer((state, action) => {}, [])
+// terceiro argumento assim qeu criar reducer, recupera os dados de algum lugar
+const [cycles, dispatch] = useReducer((state, action) => {}, [], () => {})
 
 // usar (passa oq quer dentro função mas tem que conseguir distinguir qual action usar)
 dispatch({
