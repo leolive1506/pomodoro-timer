@@ -70,6 +70,8 @@ export function CountdownContextProvider({
   useEffect(() => {
     if (activeCycle) {
       document.title = `${minutes}:${seconds}`
+    } else {
+      document.title = `Ignite timer`
     }
   }, [activeCycle, minutes, seconds])
 
